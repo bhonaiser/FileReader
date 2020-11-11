@@ -13,6 +13,8 @@ public class Cliente {
         this.businessArea = businessArea;
     }
 
+
+
     public String getCod() {
         return cod;
     }

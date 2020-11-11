@@ -8,9 +8,10 @@ public class Vendedor {
     public Vendedor() {
     }
 
-    public Vendedor(String name, String cpf) {
-        this.name = name;
+    public Vendedor(String cpf, String name, Float salary) {
         this.cpf = cpf;
+        this.name = name;
+        this.salary = salary;
     }
 
     public String getCod() {
