@@ -75,8 +75,8 @@ public class Principal {
                         //System.out.println("STRING DEPOIS DE SER RETIRADA AS QUBRAS DE LINHA !!!!!!!!!!!!!!!!!!!!");
                         //System.out.println(strAllFileBytes);
 
-                        strAllFileBytes = strAllFileBytes.replaceAll(" ", "");
-                       // System.out.println("Agora sem espaços em branco!!!!!!!!!!!!!");
+                        strAllFileBytes = strAllFileBytes.replaceAll("\\s", "");
+                        //System.out.println("Agora sem espaços em branco!!!!!!!!!!!!!");
                         //System.out.println(strAllFileBytes);
 
                     }
@@ -97,48 +97,46 @@ public class Principal {
         for(int i=0; i<aux.length;i++){
             System.out.print(aux[i] + "\n");
         }
-        encaminhaArray(aux);
+        encaminhaArray(aux, 0);
     }
 
-    private static void encaminhaArray(String[] texto){
-        if(texto != null && texto.length >0){
-            int index = 0;
+    private static void encaminhaArray(String[] texto, int index){
+        if(texto != null && index <texto.length ){
             switch(texto[index]){
-                case COD_VENDOR: trataArrayVendor(Arrays.copyOfRange(texto, index, tamanhoArrayVendor));
-                                 encaminhaArray(Arrays.copyOfRange(texto, tamanhoArrayVendor, texto.length - tamanhoArrayVendor));
+                case COD_VENDOR: trataArrayVendor(texto, index+1);
+                                 encaminhaArray(texto, index+tamanhoArrayVendor);
 
-                case COD_CLIENT: trataArrayClient(Arrays.copyOfRange(texto, index, tamanhoArrayClient));
-                                 encaminhaArray(Arrays.copyOfRange(texto, tamanhoArrayClient, texto.length - tamanhoArrayClient));
+                case COD_CLIENT: trataArrayClient(texto, index+1);
+                                 encaminhaArray(texto, index+tamanhoArrayClient);
 
-                case COD_VENDAS: trataArrayVendas(Arrays.copyOfRange(texto, index, tamanhoArrayVendas ));
-                                 encaminhaArray(Arrays.copyOfRange(texto, tamanhoArrayVendas, texto.length - tamanhoArrayVendas));
-
-            }
+                case COD_VENDAS: trataArrayVendas(texto, index);
+                                 encaminhaArray(texto, index+tamanhoArrayVendas);
+             }
         }
     }
 
 
-    private static void trataArrayVendor(String[] vendedor){
+    private static void trataArrayVendor(String[] vendedor, int index){
         System.out.println("\n Tratando Vendor");
-        System.out.println(vendedor[1]);
-        System.out.println(vendedor[2]);
-        System.out.println(vendedor[3]);
-        lst_vendedores.add(new Vendedor(vendedor[1], vendedor[2], Float.valueOf(vendedor[3])));
+        System.out.println(vendedor[index]);
+        System.out.println(vendedor[index+1]);
+        System.out.println(vendedor[index+2]);
+        lst_vendedores.add(new Vendedor(vendedor[index], vendedor[index+1], Float.valueOf(vendedor[index+2])));
     }
-    private static void trataArrayClient(String[] cliente){
+    private static void trataArrayClient(String[] cliente, int index){
         System.out.println("Tratando Cliente");
-        System.out.println(cliente[1]);
-        System.out.println(cliente[2]);
-        System.out.println(cliente[3]);
-        lst_cLientes.add(new Cliente(cliente[1], cliente[2], cliente[3]));
+        System.out.println(cliente[index]);
+        System.out.println(cliente[index+1]);
+        System.out.println(cliente[index+2]);
+        lst_cLientes.add(new Cliente(cliente[index], cliente[index+1], cliente[index+2]));
     }
 
-    private static void trataArrayVendas(String[] vendas){
+    private static void trataArrayVendas(String[] vendas, int index){
         System.out.println("Tratando Vendas");
-        System.out.println(vendas[1]);
-        System.out.println(vendas[2]);
-        System.out.println(vendas[3]);
-        //lst_vendas.add(new Venda(vendas[1], vendas[2], vendas[3]));
+        System.out.println(vendas[index]);
+        System.out.println(vendas[index+1]);
+        System.out.println(vendas[index+2]);
+      //  lst_vendas.add(new Venda(vendas[1], vendas[2], vendas[3]));
     }
 
 }
