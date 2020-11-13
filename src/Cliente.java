@@ -14,7 +14,6 @@ public class Cliente {
     }
 
 
-
     public String getCod() {
         return cod;
     }
@@ -42,5 +41,6 @@ public class Cliente {
     public void setBusinessArea(String businessArea) {
         this.businessArea = businessArea;
     }
+
 }
 

@@ -3,10 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class Principal {
@@ -95,51 +92,67 @@ public class Principal {
 
         aux = output.split("ç");
         for(int i=0; i<aux.length;i++){
-            System.out.print(aux[i] + "\n");
+            //deletar esse for
         }
         encaminhaArray(aux, 0);
+
+        System.out.println("Total de cliente : " + totalDeClientes());
+        System.out.println("Total de cliente : " + totalDeVendedores());
+
     }
 
     private static void encaminhaArray(String[] texto, int index){
-        if(texto != null && index <texto.length ){
+        if((texto != null) && (index < texto.length)){
             switch(texto[index]){
                 case COD_VENDOR: trataArrayVendor(texto, index+1);
                                  encaminhaArray(texto, index+tamanhoArrayVendor);
 
-                case COD_CLIENT: trataArrayClient(texto, index+1);
-                                 encaminhaArray(texto, index+tamanhoArrayClient);
-
-                case COD_VENDAS: trataArrayVendas(texto, index);
+                case COD_VENDAS: trataArrayVendas(texto, index+1);
                                  encaminhaArray(texto, index+tamanhoArrayVendas);
+
+                case COD_CLIENT: trataArrayClient(texto, index+1);
+                    encaminhaArray(texto, index+tamanhoArrayClient);
              }
         }
     }
 
-
     private static void trataArrayVendor(String[] vendedor, int index){
         System.out.println("\n Tratando Vendor");
-        System.out.println(vendedor[index]);
-        System.out.println(vendedor[index+1]);
-        System.out.println(vendedor[index+2]);
-        lst_vendedores.add(new Vendedor(vendedor[index], vendedor[index+1], Float.valueOf(vendedor[index+2])));
+        Vendedor vendedor1 = new Vendedor(vendedor[index], vendedor[index+1], Float.valueOf(vendedor[index+2])) ;
+        if (!lst_vendedores.contains(vendedor1))
+            lst_vendedores.add(vendedor1);
+        vendedor1 = null;
     }
     private static void trataArrayClient(String[] cliente, int index){
         System.out.println("Tratando Cliente");
-        System.out.println(cliente[index]);
-        System.out.println(cliente[index+1]);
-        System.out.println(cliente[index+2]);
-        lst_cLientes.add(new Cliente(cliente[index], cliente[index+1], cliente[index+2]));
+        Cliente cliente1 = new Cliente(cliente[index], cliente[index+1], cliente[index+2]);
+        if (!lst_cLientes.contains(cliente1));
+            lst_cLientes.add(cliente1);
+        cliente1 = null;
     }
 
     private static void trataArrayVendas(String[] vendas, int index){
         System.out.println("Tratando Vendas");
-        System.out.println(vendas[index]);
-        System.out.println(vendas[index+1]);
-        System.out.println(vendas[index+2]);
-      //  lst_vendas.add(new Venda(vendas[1], vendas[2], vendas[3]));
+        Venda venda1 = new Venda(Integer.valueOf(vendas[index]), vendas[index+1], vendas[index+2]) ;
+        if (!lst_vendas.contains(venda1))
+            lst_vendas.add(venda1);
+        venda1 = null;
     }
 
-}
+    private static int totalDeClientes(){
+        if (lst_cLientes != null && lst_cLientes.size() >  0)
+            return lst_cLientes.size();
+        else
+            return 0;
+        }
+    private static int totalDeVendedores(){
+        if (lst_vendedores != null && lst_vendedores.size() >  0)
+            return lst_vendedores.size();
+        else
+            return 0;
+    }
+
+    }
 
 
 
