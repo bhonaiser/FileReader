@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Vendedor {
 
     private final String cod = "001";
@@ -12,6 +14,19 @@ public class Vendedor {
         this.cpf = cpf;
         this.name = name;
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vendedor vendedor = (Vendedor) o;
+        return cpf.equals(vendedor.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf);
     }
 
     public String getCod() {

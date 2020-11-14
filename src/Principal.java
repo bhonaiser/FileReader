@@ -9,7 +9,8 @@ import java.util.List;
 public class Principal {
 
     private static List<Vendedor> lst_vendedores = new ArrayList<Vendedor>();
-    private static List<Venda> lst_vendas = new ArrayList<Venda>();;
+    private static List<Venda> lst_vendas = new ArrayList<Venda>();
+    ;
     private static List<Cliente> lst_cLientes = new ArrayList<Cliente>();
 
     private static final int tamanhoArrayVendor = 4;
@@ -76,78 +77,97 @@ public class Principal {
                         //System.out.println("Agora sem espaços em branco!!!!!!!!!!!!!");
                         //System.out.println(strAllFileBytes);
 
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         //System.out.println(output);
                         output = output + strAllFileBytes;
                         file.delete();
-                        }
                     }
                 }
-                scanForNewFiles = false;
             }
+            scanForNewFiles = false;
+        }
         //System.out.println(output);
 
         aux = output.split("ç");
-        for(int i=0; i<aux.length;i++){
+        for (int i = 0; i < aux.length; i++) {
             //deletar esse for
         }
         encaminhaArray(aux, 0);
 
-        System.out.println("Total de cliente : " + totalDeClientes());
-        System.out.println("Total de cliente : " + totalDeVendedores());
+        System.out.println("\nTotal de Clientes : " + totalDeClientes());
+        System.out.println("Total de Vendedores : " + totalDeVendedores());
 
     }
 
-    private static void encaminhaArray(String[] texto, int index){
-        if((texto != null) && (index < texto.length)){
-            switch(texto[index]){
-                case COD_VENDOR: trataArrayVendor(texto, index+1);
-                                 encaminhaArray(texto, index+tamanhoArrayVendor);
+    private static void encaminhaArray(String[] texto, int index) {
+        if ((texto != null) && (index < texto.length - 1)) {
+            switch (texto[index]) {
+                case COD_VENDOR:
+                    trataArrayVendor(texto, index + 1);
+                    encaminhaArray(texto, index + tamanhoArrayVendor);
+                    break;
 
-                case COD_VENDAS: trataArrayVendas(texto, index+1);
-                                 encaminhaArray(texto, index+tamanhoArrayVendas);
+                case COD_VENDAS:
+                    trataArrayVendas(texto, index + 1);
+                    encaminhaArray(texto, index + tamanhoArrayVendas);
+                    break;
 
-                case COD_CLIENT: trataArrayClient(texto, index+1);
-                    encaminhaArray(texto, index+tamanhoArrayClient);
-             }
+                case COD_CLIENT:
+                    trataArrayClient(texto, index + 1);
+                    encaminhaArray(texto, index + tamanhoArrayClient);
+                    break;
+
+            }
+        } else {
+            System.out.print("saiu do switch..");
+            return;
         }
     }
 
-    private static void trataArrayVendor(String[] vendedor, int index){
+    private static void trataArrayVendor(String[] vendedor, int index) {
         System.out.println("\n Tratando Vendor");
-        Vendedor vendedor1 = new Vendedor(vendedor[index], vendedor[index+1], Float.valueOf(vendedor[index+2])) ;
+        Vendedor vendedor1 = new Vendedor(vendedor[index], vendedor[index + 1], Float.valueOf(vendedor[index + 2]));
         if (!lst_vendedores.contains(vendedor1))
             lst_vendedores.add(vendedor1);
         vendedor1 = null;
     }
-    private static void trataArrayClient(String[] cliente, int index){
+
+    private static void trataArrayClient(String[] cliente, int index) {
         System.out.println("Tratando Cliente");
-        Cliente cliente1 = new Cliente(cliente[index], cliente[index+1], cliente[index+2]);
-        if (!lst_cLientes.contains(cliente1));
+        Cliente cliente1 = new Cliente(cliente[index], cliente[index + 1], cliente[index + 2]);
+        if (!lst_cLientes.contains(cliente1))
             lst_cLientes.add(cliente1);
         cliente1 = null;
     }
 
-    private static void trataArrayVendas(String[] vendas, int index){
+    private static void trataArrayVendas(String[] vendas, int index) {
         System.out.println("Tratando Vendas");
-        Venda venda1 = new Venda(Integer.valueOf(vendas[index]), vendas[index+1], vendas[index+2]) ;
+        Venda venda1 = new Venda(Integer.valueOf(vendas[index]), vendas[index + 1], vendas[index + 2]);
         if (!lst_vendas.contains(venda1))
             lst_vendas.add(venda1);
         venda1 = null;
     }
 
-    private static int totalDeClientes(){
-        if (lst_cLientes != null && lst_cLientes.size() >  0)
+    private static int totalDeClientes() {
+        if (lst_cLientes != null && lst_cLientes.size() > 0)
             return lst_cLientes.size();
         else
             return 0;
-        }
-    private static int totalDeVendedores(){
-        if (lst_vendedores != null && lst_vendedores.size() >  0)
+    }
+
+    private static int totalDeVendedores() {
+        if (lst_vendedores != null && lst_vendedores.size() > 0)
             return lst_vendedores.size();
+        else
+            return 0;
+    }
+
+    private static int vendaMaisCara() {
+        if (lst_vendas != null && lst_vendas.size() > 0) {
+            for (int i=0;  i< )
+        }
         else
             return 0;
     }

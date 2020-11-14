@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Cliente {
     private final String cod = "002";
     private String cnpj;
@@ -22,6 +24,19 @@ public class Cliente {
         return cnpj;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return cnpj.equals(cliente.cnpj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cnpj);
+    }
+
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
@@ -41,6 +56,8 @@ public class Cliente {
     public void setBusinessArea(String businessArea) {
         this.businessArea = businessArea;
     }
+
+
 
 }
 

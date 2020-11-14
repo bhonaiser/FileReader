@@ -90,4 +90,7 @@ public class Venda {
     public void setNomeVendedor(String nomeVendedor) {
         this.nomeVendedor = nomeVendedor;
     }
+
+
+
 }
