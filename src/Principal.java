@@ -3,7 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -96,7 +95,7 @@ public class Principal {
         System.out.println("\nTotal de Clientes   : " + totalDeClientes());
         System.out.println("Total de Vendedores   : " + totalDeVendedores());
         System.out.println("Id da venda mais cara : " + idVendaMaisCara());
-        System.out.println("CPF do pior vendedor  : " + cpfPiorVendedor());
+        System.out.println("Pior vendedor  : " +  piorVendedor());
 
     }
 
@@ -122,7 +121,7 @@ public class Principal {
     }
 
     private static void trataArrayVendor(String[] vendedor, int index) {
-        System.out.println("\n Tratando Vendor");
+        System.out.println("Tratando Vendor");
         Vendedor vendedor1 = new Vendedor(vendedor[index], vendedor[index + 1], Float.valueOf(vendedor[index + 2]));
         if (!lst_vendedores.contains(vendedor1))
             lst_vendedores.add(vendedor1);
@@ -175,14 +174,13 @@ public class Principal {
             return 0;
     }
 
-    private static String cpfPiorVendedor(){
+    private static String piorVendedor(){
         Map<String , Float> mapaVendorsValorVenda = new HashMap<String , Float>();
         if ((lst_vendedores != null && lst_vendedores.size() > 0) && (lst_vendas.size() > 0)) {
-            String cpf_pior_vendor = "vazio";
             for (int i = 0; i < lst_vendas.size(); i++) {
                 float valorTotalVenda = lst_vendas.get(i).getValorTotalDaVenda();
                 String vendorsName = lst_vendas.get(i).getNomeVendedor();
-                //Map<String , Float> mapaVendorsValorVenda = new HashMap<String , Float>();
+
                 //vendor já na lista, soma-se valor de suas vendas;
                 if(mapaVendorsValorVenda.containsKey(vendorsName))
                     mapaVendorsValorVenda.put(vendorsName, valorTotalVenda + mapaVendorsValorVenda.get(vendorsName));
@@ -192,8 +190,12 @@ public class Principal {
                 }
 
 
-            cpf_pior_vendor = mapaVendorsValorVenda.values().stream().sorted().limit(1).toString();
-            return cpf_pior_vendor;
+            String pior_vendor = mapaVendorsValorVenda.entrySet().stream()
+                    .min(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey)
+                    .orElseThrow(RuntimeException::new);
+            return pior_vendor;
+
 
         } else
             return "Nenhuma venda realizada até o momento";
