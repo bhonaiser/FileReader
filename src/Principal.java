@@ -79,40 +79,29 @@ public class Principal {
                     } catch (IOException e) {
                         e.printStackTrace();
                     } finally {
-                        //System.out.println(output);
                         output = output + strAllFileBytes;
-                        //file.delete();
+                        file.delete();
                     }
                 }
             }
             scanForNewFiles = false;
         }
-        //System.out.println(output);
 
         aux = output.split("ç");
         encaminhaArray(aux, 0);
 
-
-
-        System.out.println("\nTotal de Clientes   : " + totalDeClientes());
-        System.out.println("Total de Vendedores   : " + totalDeVendedores());
-        System.out.println("Id da venda mais cara : " + idVendaMaisCara());
-        System.out.println("Pior vendedor  : " +  piorVendedor());
-
         try {
             FileWriter myWriter = new FileWriter(dirPathOut + "\\saida.txt");
-            myWriter.write("Total de Clientes   : " + totalDeClientes() + "\n");
+            myWriter.write("Total de Clientes     : " + totalDeClientes()   + "\n");
             myWriter.write("Total de Vendedores   : " + totalDeVendedores() + "\n");
-            myWriter.write("Id da venda mais cara : " + idVendaMaisCara() + "\n");
-            myWriter.write("Pior vendedor  : " +  piorVendedor() + "\n");
+            myWriter.write("Id da venda mais cara : " + idVendaMaisCara()   + "\n");
+            myWriter.write("Pior vendedor         : " + piorVendedor()      + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-
 
     }
 
