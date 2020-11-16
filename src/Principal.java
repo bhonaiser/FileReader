@@ -2,8 +2,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -82,7 +82,7 @@ public class Principal {
                     } finally {
                         //System.out.println(output);
                         output = output + strAllFileBytes;
-                        file.delete();
+                        //file.delete();
                     }
                 }
             }
@@ -91,13 +91,12 @@ public class Principal {
         //System.out.println(output);
 
         aux = output.split("ç");
-        for (int i = 0; i < aux.length; i++) {
-            //deletar esse for
-        }
         encaminhaArray(aux, 0);
 
-        System.out.println("\nTotal de Clientes : " + totalDeClientes());
-        System.out.println("Total de Vendedores : " + totalDeVendedores());
+        System.out.println("\nTotal de Clientes   : " + totalDeClientes());
+        System.out.println("Total de Vendedores   : " + totalDeVendedores());
+        System.out.println("Id da venda mais cara : " + idVendaMaisCara());
+        System.out.println("CPF do pior vendedor  : " + cpfPiorVendedor());
 
     }
 
@@ -118,11 +117,7 @@ public class Principal {
                     trataArrayClient(texto, index + 1);
                     encaminhaArray(texto, index + tamanhoArrayClient);
                     break;
-
             }
-        } else {
-            System.out.print("saiu do switch..");
-            return;
         }
     }
 
@@ -164,15 +159,48 @@ public class Principal {
             return 0;
     }
 
-    private static int vendaMaisCara() {
+    private static int idVendaMaisCara() {
         if (lst_vendas != null && lst_vendas.size() > 0) {
-            for (int i=0;  i< )
-        }
-        else
+            int id_da_venda_mais_cara = 0;
+            float valor_venda_mais_cara = 0;
+            for (int i = 0; i < lst_vendas.size(); i++) {
+                float valorTotalVenda = lst_vendas.get(i).getValorTotalDaVenda();
+                if (valorTotalVenda > valor_venda_mais_cara) {
+                    valor_venda_mais_cara = valorTotalVenda;
+                    id_da_venda_mais_cara = lst_vendas.get(i).getId();
+                }
+            }
+            return id_da_venda_mais_cara;
+        } else
             return 0;
     }
 
+    private static String cpfPiorVendedor(){
+        Map<String , Float> mapaVendorsValorVenda = new HashMap<String , Float>();
+        if ((lst_vendedores != null && lst_vendedores.size() > 0) && (lst_vendas.size() > 0)) {
+            String cpf_pior_vendor = "vazio";
+            for (int i = 0; i < lst_vendas.size(); i++) {
+                float valorTotalVenda = lst_vendas.get(i).getValorTotalDaVenda();
+                String vendorsName = lst_vendas.get(i).getNomeVendedor();
+                //Map<String , Float> mapaVendorsValorVenda = new HashMap<String , Float>();
+                //vendor já na lista, soma-se valor de suas vendas;
+                if(mapaVendorsValorVenda.containsKey(vendorsName))
+                    mapaVendorsValorVenda.put(vendorsName, valorTotalVenda + mapaVendorsValorVenda.get(vendorsName));
+                //vendor sendo add for the 1st time
+                else
+                    mapaVendorsValorVenda.put(vendorsName, valorTotalVenda);
+                }
+
+
+            cpf_pior_vendor = mapaVendorsValorVenda.values().stream().sorted().limit(1).toString();
+            return cpf_pior_vendor;
+
+        } else
+            return "Nenhuma venda realizada até o momento";
     }
+
+}
+
 
 
 

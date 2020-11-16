@@ -2,9 +2,10 @@
 
 public class Venda {
     private final  String cod = "003";
+    private  String nomeVendedor;
     private int    idDaVenda;
     private String dadosVenda;
-    private String nomeVendedor;
+    private String cpfVendedor;
 
     private int   idDoProduto;
     private int   qntdProduto;
